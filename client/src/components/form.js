@@ -109,12 +109,12 @@ function Form(props) {
       const pages = pdfDoc.getPages();
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
-      const centerX = width / 3;
-      const centerY = 3.5 * height / 5;
+      const centerX = 1.1*width / 3;
+      const centerY = 3 * height / 5;
       firstPage.drawText(name, {
         x: centerX,
         y: centerY,
-        size: 30,
+        size: 15,
         font,
         color: rgb(0, 0, 0),
         textAlign: 'center',
