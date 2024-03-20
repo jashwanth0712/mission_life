@@ -109,7 +109,11 @@ function Form(props) {
       const pages = pdfDoc.getPages();
       const firstPage = pages[0];
       const { width, height } = firstPage.getSize();
-      const centerX = 1.1*width / 3;
+      // Calculate the width of the text
+      const textSize = font.widthOfTextAtSize(name, 20);
+
+      // Calculate the x-coordinate for centering the text
+      const centerX = (width - textSize) / 2;
       const centerY = 3 * height / 5;
       firstPage.drawText(name, {
         x: centerX,
