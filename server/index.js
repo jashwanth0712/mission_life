@@ -41,19 +41,51 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB Atlas');
 });
+
+// Define Counter schema
+const CounterSchema = new mongoose.Schema({
+  value: {
+    type: Number,
+    default: 0 // Initial counter value
+  }
+});
+
+const Counter = mongoose.model('Counter', CounterSchema);
 // Read the counter value from the file
-let counter = parseInt(fs.readFileSync(path.resolve(__dirname, 'counter.txt'), 'utf-8'));
 
 
 app.get("/", (req, res) => {res.status(200).send("Hello World!")});
-app.get("/get-pledged",async(req,res)=>{
-  console.log("request recieved")
-  counter++; // Increment the counter
-  fs.writeFileSync(path.resolve(__dirname, 'counter.txt'), counter.toString()); // Update counter in the file
-  const users = await Object.find({}).then((users)=>{console.log(users.length);return users})
-  res.send({"pledged":users.length})
-})
-  
+// Route to get the current counter value
+app.get("/get-counter", async (req, res) => {
+  try {
+    const counter = await Counter.findOne(); // Retrieve counter value from database
+    if (!counter) {
+      counter = new Counter({ value: 0 });
+    }
+    res.send({ "counter": counter.value });
+  } catch (error) {
+    console.error('Error fetching counter:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Route to update counter and get pledged users
+app.get("/get-pledged", async (req, res) => {
+  try {
+    let counter = await Counter.findOne(); // Retrieve counter value from database
+    if (!counter) {
+      counter = new Counter({ value: 0 });
+    }
+    counter.value++; // Increment the counter
+    await counter.save(); // Save updated counter value
+
+    const users = await Object.find({}).count(); // Count pledged users
+    res.send({"pledged": users, "counter": counter.value}); // Send response with pledged users count and updated counter value
+  } catch (error) {
+    console.error('Error fetching pledged users:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 // Create a new User
 app.post('/', async (req, res) => {
     try {
@@ -135,8 +167,5 @@ app.get("/pdf", (req, res) => {
       }
     });
   });
-  // Endpoint to get the current counter value
-app.get("/get-counter", (req, res) => {
-  res.send({ "counter": counter });
-});
+
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
