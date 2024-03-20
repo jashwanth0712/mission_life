@@ -53,9 +53,18 @@
   .modal-content {
     width: 80%; /* Adjust as per your requirement */
   }
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:rgb(120, 26, 26);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+  }
 }
 .footer {
-  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
