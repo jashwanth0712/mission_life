@@ -14,7 +14,7 @@ function App() {
     // Define an async function to fetch data from the API
     async function fetchData() {
       try {
-        const response = await fetch('http://localhost:5000/get-pledged');
+        const response = await fetch('https://mission-life-git-main-jashwanth0712.vercel.app/get-pledged');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

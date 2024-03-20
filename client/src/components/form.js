@@ -64,7 +64,7 @@ function Form(props) {
 
   const sendRequest = async () => {
     try {
-      const response = await fetch('https://pledge-backend.vercel.app', {
+      const response = await fetch('https://mission-life-git-main-jashwanth0712.vercel.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ function Form(props) {
     //   return;
     // }
 
-    const pdfUrl = 'https://pledge-backend.vercel.app/pdf';
+    const pdfUrl = 'https://mission-life-git-main-jashwanth0712.vercel.app/pdf';
     try {
       setIsLoading(true);
       const response = await fetch(pdfUrl);
