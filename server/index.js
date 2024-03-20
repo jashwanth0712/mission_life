@@ -3,8 +3,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Object = require("./object");
 const nodemailer = require('nodemailer');
-const fs = require("fs");
-const path = require("path");
 const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
 require('dotenv').config();
 const cors = require("cors");

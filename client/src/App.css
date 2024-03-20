@@ -49,30 +49,28 @@
   width: 50%; /* Adjust as per your requirement */
   max-width: 500px; /* Adjust as per your requirement */
 }
-@media only screen and (max-width: 800px) {
-  .modal-content {
-    width: 80%; /* Adjust as per your requirement */
-  }
-  .footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color:rgb(120, 26, 26);
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-  }
-}
+/* Default styles for .footer */
 .footer {
+  position: absolute; /* Default to absolute */
   bottom: 0;
-  left: 0;
   width: 100%;
-  background-color:rgb(120, 26, 26);
+  background-color: rgb(120, 26, 26);
   color: #fff;
   text-align: center;
   padding: 10px 0;
 }
+
+/* Media query for mobile view */
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 80%; /* Adjust as per your requirement */
+  }
+  /* Override .footer for mobile view */
+  .footer {
+    position: relative; /* Change to relative for mobile */
+  }
+}
+
 .close {
   position: absolute;
   top: 10px;

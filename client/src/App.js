@@ -9,10 +9,12 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [celebrate, setCelebrate] = useState(false);
   const [count, setCount] = useState(0);
+  const [visited,setVisited] = useState(0)
   const { width, height } = useWindowSize();
+
   useEffect(() => {
     // Define an async function to fetch data from the API
-    async function fetchData() {
+    async function fetchData1() {
       try {
         const response = await fetch('https://mission-life-git-main-jashwanth0712.vercel.app/get-pledged');
         if (!response.ok) {
@@ -24,10 +26,28 @@ function App() {
       } catch (error) {
         console.error('Error fetching data:', error);
       }
+   
     }
+    async function fetchData() {
+      try {
+        const response = await fetch('https://mission-life-git-main-jashwanth0712.vercel.app/get-counter');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        // Assuming response data has a property named 'pledged' containing the number
+        setVisited(data.counter);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+   
+    }
+    
+
 
     // Call the async function to fetch data when component mounts
     fetchData();
+    fetchData1();
 
     // You might want to add dependencies if you need to control when the effect runs
     // For example, if you want to fetch data only when a certain prop changes, you can add it to the dependency array.
@@ -105,7 +125,7 @@ I pledge to make all possible changes in my daily life to protect the environmen
     </div>
     </div>
     <footer className="footer">
-        <a href='https://www.iiitdm.ac.in/'>Developed by IIITDM Kancheepuram</a>
+        <a href='https://www.iiitdm.ac.in/'>Developed by IIITDM Kancheepuram  | {visited} visited </a>
       </footer>
   </div>
   
