@@ -114,7 +114,7 @@ function Form(props) {
       firstPage.drawText(name, {
         x: centerX,
         y: centerY,
-        size: 15,
+        size: 20,
         font,
         color: rgb(0, 0, 0),
         textAlign: 'center',
