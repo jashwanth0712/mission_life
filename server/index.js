@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Object = require("./object");
 const nodemailer = require('nodemailer');
+const fs = require("fs");
+const path = require("path");
 const { PDFDocument, StandardFonts, rgb } = require('pdf-lib');
 require('dotenv').config();
 const cors = require("cors");
@@ -41,11 +43,15 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB Atlas');
 });
+// Read the counter value from the file
+let counter = parseInt(fs.readFileSync(path.resolve(__dirname, 'counter.txt'), 'utf-8'));
 
 
 app.get("/", (req, res) => {res.status(200).send("Hello World!")});
 app.get("/get-pledged",async(req,res)=>{
   console.log("request recieved")
+  counter++; // Increment the counter
+  fs.writeFileSync(path.resolve(__dirname, 'counter.txt'), counter.toString()); // Update counter in the file
   const users = await Object.find({}).then((users)=>{console.log(users.length);return users})
   res.send({"pledged":users.length})
 })
@@ -131,4 +137,8 @@ app.get("/pdf", (req, res) => {
       }
     });
   });
+  // Endpoint to get the current counter value
+app.get("/get-counter", (req, res) => {
+  res.send({ "counter": counter });
+});
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
